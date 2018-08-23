@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="globconf",
-    version="0.0.2",
+    name="klang-globconf",
+    version="0.0.4",
     author="Steffen Schumacher",
     author_email="ssch@wheel.dk",
     description="global configparser object to be used across modules",
