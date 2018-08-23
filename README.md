@@ -1,3 +1,7 @@
+[![Build status](https://cloudpartners.visualstudio.com/MyFirstProject/_apis/build/status/2?branch=master)](https://cloudpartners.visualstudio.com/MyFirstProject/_build/latest?definitionId=2&branch=master)
+
+
+
 # globconf
 
 Creates a global configparser object, regardless of the project and module in need of it
