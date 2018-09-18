@@ -1,0 +1,68 @@
+resources:
+- repo: self
+phases:
+#Multi-configuration and multi-agent job options are not exported to YAML. Configure these options using documentation guidance: https://docs.microsoft.com/vsts/pipelines/process/phases
+
+- phase: Phase_1
+  displayName: Build and Test
+
+  condition: succeeded()
+  queue:
+    name: Hosted Linux Preview
+  variables:
+    python.version: '2.7, 3.5, 3.6, >= 3.7.0a'
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
+
+
+  - script: 'python -m pip install --upgrade pip && pip install -r requirements.txt'
+    displayName: 'Install dependencies'
+
+
+- phase: Phase_2
+  displayName: Publish
+
+  dependsOn: Phase_1
+  condition: succeeded()
+  queue:
+    name: Hosted Linux Preview
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python >= 3.6'
+    inputs:
+      versionSpec: '>= 3.6'
+
+
+  - script: 'python setup.py sdist'
+    displayName: 'Build sdist'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: dist'
+    inputs:
+      PathtoPublish: dist
+
+      ArtifactName: dist
+
+
+  - task: PyPIPublisher@0
+    displayName: 'Package and publish to PyPI-test'
+    inputs:
+      pypiConnection: 'PyPi-test'
+
+      packageDirectory: '$(Build.SourcesDirectory)'
+
+
+  - task: PyPIPublisher@0
+    displayName: 'Package and publish to PyPI-upload'
+    inputs:
+      pypiConnection: PyPi
+
+      packageDirectory: '$(Build.SourcesDirectory)'
+
+      alsoPublishWheel: true
+
+    continueOnError: true
+

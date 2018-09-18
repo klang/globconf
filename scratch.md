@@ -2,7 +2,21 @@
 
 https://docs.microsoft.com/en-us/vsts/pipelines/build/ci-build-github?view=vsts&tabs=yaml
 
+## Status badge
 
+Under "Build and release" for the project, select "options", copy the "Status badge" Markdown link to the Readme.md file of the project.
+
+[![Build status](https://cloudpartners.visualstudio.com/MyFirstProject/_apis/build/status/MyFirstProject-Python%20package-CI)](https://cloudpartners.visualstudio.com/MyFirstProject/_build/latest?definitionId=2)
+
+If the image is broken above, or [this](https://cloudpartners.visualstudio.com/MyFirstProject/_apis/build/status/MyFirstProject-Python%20package-CI) link returns the following error in an anonymous browser, then the TFTS Organisation need to allow public projects AND the project need to be public.
+
+    {"$id":"1","innerException":null,"message":"TF50309: The following account does not have sufficient permissions to complete the operation: Anonymous. The following permissions are needed to perform this operation: View project-level information.","typeName":"System.UnauthorizedAccessException, mscorlib","typeKey":"UnauthorizedAccessException","errorCode":0,"eventId":0}
+
+Turn on anonymous access to projects [here](https://cloudpartners.visualstudio.com/_admin/_policy)
+
+Then, make the project public, under "specific people", [here](https://cloudpartners.visualstudio.com/MyFirstProject/_admin)
+
+The relevant documentation for Microsoft VSTS is [here](https://docs.microsoft.com/en-us/vsts/organizations/public/make-project-public?view=vsts&tabs=previous-nav)
 
 ### PyPi server
 
@@ -49,6 +63,7 @@ start up the container:
     twine upload -u some_username -p abc123 --repository-url http://localhost dist/* --skip-existing
 
     twine upload --repository-url http://upload.pypi.org/legacy/ dist/*
+    twine upload --repository-url http://test.pypi.org/legacy/ dist/*
 
 
 
