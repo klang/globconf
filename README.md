@@ -61,6 +61,19 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
+### package
+
+    python setup.py sdist
+
+
+### test
+    
+    pytest
+    
+or
+    
+    pyton -m unittest
+
 ## Authors
 
 * **Steffen Schumacher** - *Initial work* - [steffenschumacher](https://github.com/steffenschumacher)
